@@ -1,0 +1,8 @@
+import "google/protobuf/descriptor.proto";
+
+option java_package = "ru.rknrl.rpc";
+
+extend google.protobuf.MessageOptions {
+    optional int32 msgid = 9396;
+}
+
