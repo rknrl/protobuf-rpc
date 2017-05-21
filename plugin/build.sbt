@@ -4,6 +4,8 @@ version := "1.0"
 
 scalaVersion := "2.11.11"
 
+crossScalaVersions := Seq("2.11.11", "2.12.2")
+
 import sbtprotobuf.{ProtobufPlugin=>PB}
 
 Seq(PB.protobufSettings: _*)
