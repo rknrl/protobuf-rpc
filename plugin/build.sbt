@@ -4,13 +4,17 @@ version := "1.0"
 
 scalaVersion := "2.11.11"
 
+crossScalaVersions := Seq("2.11.11", "2.12.2")
+
 import sbtprotobuf.{ProtobufPlugin=>PB}
 
 Seq(PB.protobufSettings: _*)
 
 version in protobufConfig := "2.6.1"
 
-javaSource in PB.protobufConfig <<= (baseDirectory in Compile)(_ / "src/generated/java")
+// javaSource in PB.protobufConfig <<= (baseDirectory in Compile)(_ / "src/generated/java")
+
+javaSource in PB.protobufConfig := ((baseDirectory in Compile).value / "src/generated/java")
 
 protocOptions in PB.protobufConfig += "--proto_path=" + sourceDirectory.value + "/main/proto"
 
