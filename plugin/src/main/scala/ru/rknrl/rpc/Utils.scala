@@ -18,6 +18,11 @@ import scala.collection.JavaConversions.asScalaBuffer
 object Utils {
   def msgId(d: DescriptorProto) = d.getOptions.getExtension(Options.msgid)
 
+  def checkMsgIdDuplicates(ds: Seq[DescriptorProto]): Unit = {
+    val duplicates = ds.groupBy(d ⇒ msgId(d)).filter(_._2.size > 1)
+    if (duplicates.nonEmpty) throw new Error("Duplicate msgId: " + duplicates.keys.mkString(","))
+  }
+
   /** MyWord => myWord */
   def uncapitalize(s: String): String =
     if (s == null) null

@@ -13,7 +13,7 @@ import java.io.{PrintWriter, StringWriter}
 import com.google.protobuf.DescriptorProtos.DescriptorProto
 import com.google.protobuf.ExtensionRegistry
 import com.google.protobuf.compiler.PluginProtos.{CodeGeneratorRequest, CodeGeneratorResponse}
-import ru.rknrl.rpc.Utils.msgId
+import ru.rknrl.rpc.Utils.{checkMsgIdDuplicates, msgId}
 
 import scala.collection.JavaConversions.{asJavaIterable, asScalaBuffer}
 
@@ -45,6 +45,8 @@ object MainScala {
       .filter(f ⇒ request.getFileToGenerateList.contains(f.getName))
       .flatMap(f ⇒ f.getMessageTypeList
         .filter(m ⇒ m.hasOptions && m.getOptions.hasExtension(Options.msgid)))
+
+    checkMsgIdDuplicates(messages)
 
     val content =
       "package generated\n" +
